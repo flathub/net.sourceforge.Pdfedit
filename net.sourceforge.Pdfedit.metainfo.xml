@@ -10,8 +10,7 @@
     <p>Free editor for PDF documents. Complete editing of PDF documents is possible with PDFedit.</p>
     <p>You can either change raw pdf objects (for advanced users) or use predefined gui functions.</p>
     <p> ---------- DISCLAIMER ---------- </p>
-    <p>This is legacy software which uses old unmaintained libraries (Qt3, Xpdf 3.02) for which there are no security backports,</p>
-    <p>therefore you should NOT open any untrusted pdf files with this software.</p>
+    <p>This is legacy software which uses old unmaintained libraries (Qt3, Xpdf 3.02) for which there are no security backports, therefore you should NOT open any untrusted pdf files with this software. Because of this, we have restricted the application to only have access to the standard <em>Downloads</em> and <em>Documents</em> folders, so you may need to copy/move your pdf file there so you can open it with PDFedit.</p>
   </description>
   <provides>
     <binary>pdfedit</binary>
