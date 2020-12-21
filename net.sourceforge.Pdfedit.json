@@ -143,8 +143,8 @@
                 {
                     "type": "git",
                     "url": "git://git.code.sf.net/p/pdfedit/git",
-                    "tag": "0.4.5.fl1",
-                    "commit": "04f22d952c0f5b02c12e5da5511730f84c4aa952"
+                    "tag": "0.4.5.fl2",
+                    "commit": "27ab0085d1c7502658b385bffc861c38b3f52abf"
                 },
                 {
                     "type": "file",
