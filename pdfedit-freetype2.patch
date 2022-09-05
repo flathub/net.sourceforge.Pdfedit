@@ -1,0 +1,86 @@
+diff --git a/config/freetype2.m4 b/config/freetype2.m4
+index ada8ac4..44b2a89 100644
+--- a/config/freetype2.m4
++++ b/config/freetype2.m4
+@@ -65,12 +65,7 @@ AC_DEFUN([AC_CHECK_FT2],
+    min_ft_version=m4_if([$1], [], [7.0.1], [$1])
+    AC_MSG_CHECKING([for FreeType -- version >= $min_ft_version])
+    no_ft=""
+-   if test "$FT2_CONFIG" = "no" ; then
+-     no_ft=yes
+-   else
+-     FT2_CFLAGS=`$FT2_CONFIG $ft_config_args --cflags`
+-     FT2_LIBS=`$FT2_CONFIG $ft_config_args --libs`
+-   fi                 # test "$FT2_CONFIG" = "no"
++   PKG_CHECK_MODULES(FT2, freetype2 >= 7.0.1, , no_ft="no")
+ 
+    if test x$no_ft = x ; then
+      AC_MSG_RESULT([yes])
+diff --git a/src/xpdf/xpdf/SplashOutputDev.cc b/src/xpdf/xpdf/SplashOutputDev.cc
+index 281aca0..2e10c6a 100644
+--- a/src/xpdf/xpdf/SplashOutputDev.cc
++++ b/src/xpdf/xpdf/SplashOutputDev.cc
+@@ -1087,7 +1087,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName,
+ 			   ((Gfx8BitFont *)gfxFont)->getEncoding()))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a Type1 font for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1099,7 +1099,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName,
+ 			   ((Gfx8BitFont *)gfxFont)->getEncoding()))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a Type1C font for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1111,7 +1111,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName,
+ 			   ((Gfx8BitFont *)gfxFont)->getEncoding()))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a Type1COT font for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1132,7 +1132,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName,
+ 			   codeToGID, n))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a TrueType font for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1144,7 +1144,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   id,
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a CIDType0 font for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1155,7 +1155,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   id,
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a CIDType0COTfont for '%s'",
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
+@@ -1210,7 +1210,8 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
+ 			   fileName->getCString(),
+ 			   fileName == tmpFileName,
+ 			   codeToGID, n))) {
+-	error(-1, "Couldn't create a font for '%s'",
++	error(-1, "Couldn't create a CIDType2 (%d) font for '%s'",
++              fontType,
+ 	      gfxFont->getName() ? gfxFont->getName()->getCString()
+ 	                         : "(unnamed)");
+ 	goto err2;
