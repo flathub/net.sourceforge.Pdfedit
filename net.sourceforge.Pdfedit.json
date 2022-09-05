@@ -1,8 +1,7 @@
 {
     "app-id": "net.sourceforge.Pdfedit",
     "runtime": "org.freedesktop.Platform",
-    "runtime-version": "20.08",
-    "branch": "stable",
+    "runtime-version": "22.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "pdfedit",
     "finish-args": [
@@ -44,11 +43,13 @@
                     "type": "archive",
                     "url": "http://download.qt.io/archive/qt/3/qt-x11-free-3.3.8b.tar.gz",
                     "sha256": "1b7a1ff62ec5a9cb7a388e2ba28fda6f960b27f27999482ebeceeadb72ac9f6e"
-                },  
+                },
                 {
                     "type": "patch",
                     "strip-components": 1,
-                    "options": ["-l"],
+                    "options": [
+                        "-l"
+                    ],
                     "paths": [
                         "fedora_rpm_patches/qt-x11-free-3.3.8b-CVE-2013-4549.patch",
                         "fedora_rpm_patches/qt-x11-free-3.3.8b-CVE-2014-0190.patch",
@@ -94,7 +95,9 @@
                 {
                     "type": "patch",
                     "strip-components": 0,
-                    "options": ["-l"],
+                    "options": [
+                        "-l"
+                    ],
                     "paths": [
                         "fedora_rpm_patches/0079-compositing-types.patch",
                         "fedora_rpm_patches/0080-net-wm-sync-request-2.patch",
@@ -125,15 +128,20 @@
         },
         {
             "name": "pdfedit",
-            "buildsystem": "simple",
-            "build-commands": [
-                "QTDIR=/app autoconf",
-                "cp -p /usr/share/automake-*/config.{sub,guess} .",
-                "QTDIR=/app ./configure --prefix=/app --with-boost=/app",
-                "QTDIR=/app /usr/bin/make clean",
-                "mkdir -p /app/share/pdfedit || echo '/app/share/pdfedit already exists'",
-                "QTDIR=/app CFLAGS=\"$CFLAGS -w -fPIC\" CXXFLAGS=\"$CXXFLAGS -fPIC -std=c++11 -w -DQSDEBUGGER -DQT_CLEAN_NAMESPACE -DCONFIG_DATA_PATH=/app/share/pdfedit\" /usr/bin/make -e",
-                "QTDIR=/app /usr/bin/make install"
+            "buildsystem": "autotools",
+            "build-options": {
+                "cflags": "-w -fPIC",
+                "cxxflags": "-fPIC -std=c++11 -w -DQSDEBUGGER -DQT_CLEAN_NAMESPACE -DCONFIG_DATA_PATH=/app/share/pdfedit",
+                "env": [
+                    "QTDIR=/app"
+                ]
+            },
+            "make-args": [
+                "-e"
+            ],
+            "no-autogen": true,
+            "config-opts": [
+                "--with-boost=/app"
             ],
             "post-install": [
                 "install -Dm644 /app/share/pdfedit/icon/pdfedit_icon.svg /app/share/icons/hicolor/scalable/apps/net.sourceforge.Pdfedit.svg",
@@ -148,12 +156,18 @@
                     "commit": "27ab0085d1c7502658b385bffc861c38b3f52abf"
                 },
                 {
-                    "type": "file",
-                    "path": "patch.patch"
+                    "type": "patch",
+                    "paths": [
+                        "qsa_configure2.patch",
+                        "pdfedit-freetype2.patch"
+                    ]
                 },
                 {
-                    "type": "patch",
-                    "path": "qsa_configure2.patch"
+                    "type": "shell",
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                        "autoreconf -vfi"
+                    ]
                 },
                 {
                     "type": "file",
