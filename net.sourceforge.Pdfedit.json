@@ -1,7 +1,7 @@
 {
     "app-id": "net.sourceforge.Pdfedit",
     "runtime": "org.freedesktop.Platform",
-    "runtime-version": "22.08",
+    "runtime-version": "23.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "pdfedit",
     "finish-args": [
@@ -41,7 +41,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://download.qt.io/archive/qt/3/qt-x11-free-3.3.8b.tar.gz",
+                    "url": "https://download.qt.io/archive/qt/3/qt-x11-free-3.3.8b.tar.gz",
                     "sha256": "1b7a1ff62ec5a9cb7a388e2ba28fda6f960b27f27999482ebeceeadb72ac9f6e"
                 },
                 {
@@ -151,7 +151,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.code.sf.net/p/pdfedit/git",
+                    "url": "https://git.code.sf.net/p/pdfedit/git",
                     "tag": "0.4.5.fl2",
                     "commit": "27ab0085d1c7502658b385bffc861c38b3f52abf"
                 },
