@@ -4,6 +4,7 @@
   <launchable type="desktop-id">net.sourceforge.Pdfedit.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0</project_license>
+  <developer_name>The PDFedit authors</developer_name>
   <name>PDFedit</name>
   <summary>PDF editor with ability to browse/edit the tree of raw pdf objects</summary>
   <description>
